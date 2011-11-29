@@ -1,9 +1,10 @@
 # Maintainer: fauno <fauno at kiwwwi.com.ar>
 # Maintainer: Olivier Ramonat <olivier at ramonat dot fr>
 # Maintainer: Richard Murri <admin@richardmurri.com>
+# Maintainer: Adrian Perez <aperez@igalia.com>
 
 pkgname=notmuch
-pkgver=0.9
+pkgver=0.10
 pkgrel=1
 pkgdesc="Notmuch is not much of an email program"
 arch=(i686 x86_64 mips64el)
@@ -16,7 +17,7 @@ optdepends=('emacs: for using the emacs interface'
             'python2: for using the python bindings'
             'gnupg: for email encryption')
 source=("http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz")
-md5sums=('714c2fa760bb8c5767b616fd837bfbce')
+sha1sums=('6dc3d84da53cb16818d06e1825022f3b23e473d5')
 
 build() {
   cd "$srcdir/${pkgname}-${pkgver}"
