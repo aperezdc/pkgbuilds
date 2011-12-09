@@ -4,20 +4,20 @@
 # Maintainer: Adrian Perez <aperez@igalia.com>
 
 pkgname=notmuch
-pkgver=0.10
+pkgver=0.10.2
 pkgrel=1
 pkgdesc="Notmuch is not much of an email program"
 arch=(i686 x86_64 mips64el)
 url="http://notmuchmail.org/"
 license=('GPL3')
-depends=('xapian-core' 'gmime')
-makedepends=('talloc' 'python2' 'emacs' 'gnupg')
+depends=('xapian-core' 'gmime' 'talloc')
+makedepends=('python2' 'emacs' 'gnupg' 'pkgconfig')
 optdepends=('emacs: for using the emacs interface'
             'vim: for using the vim interface'
             'python2: for using the python bindings'
             'gnupg: for email encryption')
 source=("http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz")
-sha1sums=('6dc3d84da53cb16818d06e1825022f3b23e473d5')
+sha1sums=('3064c1722d30c71f287e1ab63ac13a5847e20c14')
 
 build() {
   cd "$srcdir/${pkgname}-${pkgver}"
