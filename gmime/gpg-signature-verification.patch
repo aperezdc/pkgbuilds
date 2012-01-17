@@ -1,0 +1,26 @@
+From c99dad7a19c97585aa14eb92ab30b3108bcac576 Mon Sep 17 00:00:00 2001
+From: Thomas Jost <schnouki@schnouki.net>
+Date: Tue, 17 Jan 2012 13:53:57 +0100
+Subject: [PATCH] Fix GPG signature verification when signer's key is missing
+
+---
+ gmime/gmime-gpg-context.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+diff --git a/gmime/gmime-gpg-context.c b/gmime/gmime-gpg-context.c
+index 439b023..785e5fd 100644
+--- a/gmime/gmime-gpg-context.c
++++ b/gmime/gmime-gpg-context.c
+@@ -1907,9 +1907,6 @@ gpg_verify (GMimeCryptoContext *context, GMimeDigestAlgo digest,
+ 		errno = save;
+ 		
+ 		g_set_error_literal (err, GMIME_ERROR, errno, diagnostics);
+-		gpg_ctx_free (gpg);
+-		
+-		return NULL;
+ 	}
+ 	
+ 	signatures = gpg->signatures;
+-- 
+1.7.8.3
+
