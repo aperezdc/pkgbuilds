@@ -4,7 +4,7 @@
 # Maintainer: Adrian Perez <aperez@igalia.com>
 
 pkgname=notmuch
-pkgver=0.10.2
+pkgver=0.11
 pkgrel=1
 pkgdesc="Notmuch is not much of an email program"
 arch=(i686 x86_64 mips64el)
@@ -16,11 +16,21 @@ optdepends=('emacs: for using the emacs interface'
             'vim: for using the vim interface'
             'python2: for using the python bindings'
             'gnupg: for email encryption')
-source=("http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz")
-sha1sums=('3064c1722d30c71f287e1ab63ac13a5847e20c14')
+source=(
+	"http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz"
+	"http://people.igalia.com/aperez/files/${pkgname}-${pkgver}-gmime26.patch"
+)
+sha1sums=('11eb1d967af089ed36f6816f61ebae308bc19339'
+          '87da6518aa0418049f3fc1c43380e99bb526d884')
+
 
 build() {
   cd "$srcdir/${pkgname}-${pkgver}"
+
+	if [ ! -r .patched ] ; then
+		patch -p1 < "${srcdir}/${pkgname}-${pkgver}-gmime26.patch"
+		touch .patched
+	fi
 
   ./configure --prefix=/usr --sysconfdir=/etc
   make
