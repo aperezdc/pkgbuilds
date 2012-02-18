@@ -1,5 +1,5 @@
 pkgname='xdwm'
-pkgver='6.0.4'
+pkgver='6.0.5'
 pkgrel='1'
 pkgdesc='An extended dynamic window manager for X (dwm fork)'
 url='http://github.com/aperezdc/xdwm'
@@ -7,7 +7,7 @@ license=( MIT )
 source=( "http://people.igalia.com/aperez/files/${pkgname}-${pkgver}.tar.gz" )
 arch=( i686 x86_64 )
 options=( zipman )
-sha1sums=('b9a12a2dd937e122b90f56582163c209eb1cc052')
+sha1sums=('8a7bf3f6a73b3d12b793146ceab889b0f22b4504')
 depends=(
 	'dmon>=0.4.2'
 	'dwt'
