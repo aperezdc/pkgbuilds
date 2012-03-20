@@ -4,7 +4,7 @@
 # Maintainer: Adrian Perez <aperez@igalia.com>
 
 pkgname=notmuch
-pkgver=0.11
+pkgver=0.12
 pkgrel=1
 pkgdesc="Notmuch is not much of an email program"
 arch=(i686 x86_64 mips64el)
@@ -18,19 +18,11 @@ optdepends=('emacs: for using the emacs interface'
             'gnupg: for email encryption')
 source=(
 	"http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz"
-	"http://people.igalia.com/aperez/files/${pkgname}-${pkgver}-gmime26.patch"
 )
-sha1sums=('11eb1d967af089ed36f6816f61ebae308bc19339'
-          '87da6518aa0418049f3fc1c43380e99bb526d884')
-
+md5sums=('466974db1d8a215c6a2d7cca7c969b4f')
 
 build() {
   cd "$srcdir/${pkgname}-${pkgver}"
-
-	if [ ! -r .patched ] ; then
-		patch -p1 < "${srcdir}/${pkgname}-${pkgver}-gmime26.patch"
-		touch .patched
-	fi
 
   ./configure --prefix=/usr --sysconfdir=/etc
   make
@@ -53,7 +45,7 @@ package(){
 
   # Install python bindings
 
-  cd "$srcdir/${pkgname}-${pkgver}/bindings/python"
+  cd $srcdir/${pkgname}-*/bindings/python
 
   find "." -name '*.py' -print0 |xargs -0 \
       sed -i -e 's,^#!/usr/bin/env python$,#!/usr/bin/env python2,' \
