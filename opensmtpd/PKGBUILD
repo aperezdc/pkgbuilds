@@ -30,4 +30,6 @@ build() {
 package() {
   cd "$srcdir/$pkgname"
   make DESTDIR="$pkgdir/" install
+  ln -s smtpctl "${pkgdir}/usr/sbin/sendmail"
+  ln -s smtpctl "${pkgdir}/usr/sbin/send-mail"
 }
