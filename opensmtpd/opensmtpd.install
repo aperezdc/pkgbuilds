@@ -1,0 +1,36 @@
+#! /bin/bash
+# opensmtpd.install
+
+set -e
+
+smtpd_spool_dirs=(
+	/var/spool/smtpd/queue
+	/var/spool/smtpd/corrupt
+	/var/spool/smtpd/incoming
+)
+
+
+post_install ()
+{
+	local rc=0
+
+	# Add the _smtpd user/group
+	useradd -U -r -M --no-log-init \
+		-d '/var/empty' -s '/bin/false' \
+		-c 'SMTP daemon' _smtpd || rc=$?
+
+	# Exit code corresponds to "username already in use", this
+	# happens when the account already exists.
+	if [[ $? -ne 9 ]] ; then
+		return ${rc}
+	fi
+
+	# Create directories and set permissions
+	mkdir -p "${smtpd_spool_dirs[@]}" /var/empty
+	chmod 700 "${smtpd_spool_dirs[@]}"
+	chgrp root "${smtpd_spool_dirs[@]}"
+	chown _smtpd "${smtpd_spool_dirs[@]}"
+
+	chmod 711 /var/spool/smtpd
+}
+
