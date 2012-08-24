@@ -4,7 +4,7 @@
 # Maintainer: Adrian Perez <aperez@igalia.com>
 
 pkgname=notmuch
-pkgver=0.13.2
+pkgver=0.14
 pkgrel=2
 pkgdesc="Notmuch is not much of an email program"
 arch=(i686 x86_64 mips64el)
@@ -19,7 +19,7 @@ optdepends=('emacs: for using the emacs interface'
 source=(
 	"http://notmuchmail.org/releases/${pkgname}-${pkgver}.tar.gz"
 )
-sha1sums=('368b2451a64b1e3c574e688100700fc941ff2ea1')
+md5sums=('5eb3f225d3eb37862932f6baa5780d15')
 
 build() {
   cd "$srcdir/${pkgname}-${pkgver}"
