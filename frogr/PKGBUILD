@@ -1,6 +1,6 @@
 # Contributor: uastasi <uastasi@archlinux.us>
 pkgname=frogr
-pkgver=0.6.1
+pkgver=0.7
 pkgrel=1
 pkgdesc="a flickr remote organizer for GNOME"
 arch=('i686' 'x86_64')
@@ -9,8 +9,8 @@ license=('GPL')
 depends=('gtk3' 'cairo' 'pkg-config' 'gnome-doc-utils')
 makedepends=('intltool')
 options=()
-source=(http://download.gnome.org/sources/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.bz2)
-sha256sums=( 2ef99647d07f2c5236cb5101a130712f312d33aad14cfc651aa198f8b67e0d2b )
+source=(http://download.gnome.org/sources/$pkgname/${pkgver}/$pkgname-$pkgver.tar.xz)
+sha256sums=( 29f98e0db06b22cd93df6e764eec2f53d4fe0de1cb45772859fbca8c83a4e1f0 )
 
 build() {
     cd "${srcdir}/${pkgname}-${pkgver}"
