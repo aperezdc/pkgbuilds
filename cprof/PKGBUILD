@@ -1,0 +1,24 @@
+# Maintainer: Adrian Perez de Castro <aperez@igalia.com>
+pkgname=cprof
+pkgver=1.0.2
+pkgrel=1
+pkgdesc="Enhanced performance profiler, similar to gprof"
+arch=('i686')
+url="http://cprof.sourceforge.net/"
+license=('GPL')
+depends=('elfutils>=0.8.4')
+source=("http://sourceforge.net/projects/cprof/files/$pkgname/$pkgname-$pkgver/$pkgname-$pkgver.tar.gz")
+md5sums=('d00504848959c43a4f9b96f615ef91c6')
+
+build() {
+  cd "$srcdir/$pkgname-$pkgver"
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  make DESTDIR="$pkgdir/" install
+}
+
+# vim:set ts=2 sw=2 et:
