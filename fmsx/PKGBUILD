@@ -1,0 +1,35 @@
+# Author: Adrian Perez de Castro <adrian@perezdecastro.org>
+
+pkgname='fmsx'
+pkgdesc='Portable MSX emulator'
+pkgver='3.5.1'
+pkgrel='1'
+url='http://fms.komkon.org/fMSX'
+license='ad-hoc'
+arch=('x86_64' 'i686')
+depends=('glibc' 'libx11')
+makedepends=('sed')
+source=( fmsx.sh "${url}/fMSX${pkgver//./}.zip" )
+md5sums=('4218532daa713d254704f3798a3c1d82'
+         '270df07fccb0dac7bbe4e4e09cfc27d0')
+
+prepare () {
+	# Building fails with recent versions of zlib, disable it
+	sed -e '/^DEFINES[[:space:]]*=/s/-DZLIB//' \
+		-e '/^LIBS[[:space:]]*=/s/-lz//' \
+		-i EMULib/Rules.gcc
+}
+
+build () {
+	cd "${srcdir}"
+	make -C fMSX/Unix
+}
+
+package () {
+	cd "${srcdir}"
+	mkdir -p "${pkgdir}/usr/lib/fmsx"
+	install -m 755 fMSX/Unix/fmsx "${pkgdir}/usr/lib/fmsx"
+	install -m 644 fMSX/ROMs/* "${pkgdir}/usr/lib/fmsx"
+	mkdir -p "${pkgdir}/usr/bin"
+	install -m 755 "${startdir}/fmsx.sh" "${pkgdir}/usr/bin/fmsx"
+}
