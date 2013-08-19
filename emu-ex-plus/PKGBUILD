@@ -1,0 +1,118 @@
+# Maintainer: Adrian Perez de Castro <adrian@perezdecastro.org>
+pkgname=emu-ex-plus-git
+pkgver=20130818
+pkgrel=1
+pkgdesc="Emulators for MSX"
+arch=('x86_64')
+url="http://www.explusalpha.com/home/msx-emu"
+license=('GPL')
+depends=('minizip' 'libgl' 'libx11' 'boost')
+makedepends=('git')
+
+source=( 2600emu.sh
+         gbaemu.sh
+         gbcemu.sh
+         mdemu.sh
+         msxemu.sh
+         neoemu.sh
+         nesemu.sh
+         ngpemu.sh
+         pceemu.sh
+         saturnemu.sh )
+md5sums=('217ad9ed80182a01dccd2c2fbc7c99f6'
+         '8dcaaebe062be22743d9a9eb8409540e'
+         '7dd850463a8fe6e25888c84b4f53ca8f'
+         'db492df9920f76563b5326ab84c3c4f7'
+         '72ee8c3ed7f95f49be68a5ae1f6584a3'
+         '6d7dcbd4b52a2f280a6fe97b44ea2ccb'
+         'fe9da8a89099c6bb4cf8cc5e4e3e2215'
+         '277224700a7017c842e3d7b991d8e439'
+         'bad0f57299c865ac7f170c9e1a553bd6'
+         '6525b753ebd849f9af0878ed639566ef')
+
+_emulators=( 2600 GBA GBC MD MSX NEO NES NGP PCE Saturn )
+# Won't build: C64 Snes9x
+
+_gitroot=https://code.google.com/p/emu-ex-plus-alpha
+_gitname=emu-ex-plus-alpha
+
+
+makefile='
+-include config.mk
+O_RELEASE := 1
+O_LTO := 1
+gcc_noGraphite := 1
+include $(IMAGINE_PATH)/make/linux-x86_64-gcc.mk
+include build.mk
+'
+
+emuex_build_at () {
+  echo "[1;1m=== Building $1 ===[0;0m"
+  cd "${srcdir}/${_gitname}-build/$1"
+  echo "${makefile}" > build-native.mk
+  make -f build-native.mk IMAGINE_PATH="${srcdir}/${_gitname}-build/imagine" -j$(getconf _NPROCESSORS_CONF)
+}
+
+build() {
+  cd "$srcdir"
+  msg "Connecting to GIT server...."
+
+  if [[ -d "$_gitname" ]]; then
+    cd "$_gitname" && git pull origin
+    msg "The local files are updated."
+  else
+    git clone "$_gitroot" "$_gitname"
+  fi
+
+  msg "GIT checkout done or server timeout"
+  msg "Starting build..."
+
+  rm -rf "$srcdir/$_gitname-build"
+  git clone "$srcdir/$_gitname" "$srcdir/$_gitname-build"
+  cd "$srcdir/$_gitname-build"
+
+  #
+  # BUILD HERE
+  #
+  emuex_build_at imagine
+  local i
+  for i in ${_emulators[@]} ; do
+    emuex_build_at "${i}.emu"
+  done
+}
+
+package() {
+  cd "${srcdir}/${_gitname}-build/"
+  mkdir -p "${pkgdir}/usr/lib/emu-ex-plus" "${pkgdir}/usr/bin"
+
+  local i
+  for i in ${_emulators[@]} ; do
+    if [[ $i = MSX ]] ; then
+      continue
+    fi
+    local exename="${i,,}emu"
+    if [[ -x ${i}.emu/target/linux/${exename} ]] ; then
+      if [[ -r ${srcdir}/${exename}.sh ]] ; then
+        install -m 755 "${i}.emu/target/linux/${exename}" \
+          "${pkgdir}/usr/lib/emu-ex-plus"
+        install -m 755 "${srcdir}/${exename}.sh" \
+          "${pkgdir}/usr/bin/${exename}"
+      else
+        install -m 755 "${i}.emu/target/linux/${exename}" \
+          "${pkgdir}/usr/bin"
+      fi
+    fi
+  done
+
+  if [[ -x MSX.emu/target/linux/msxemu ]] ; then
+    mkdir -p "${pkgdir}/usr/lib/emu-ex-plus/msx"
+    install -m 755 MSX.emu/target/linux/msxemu \
+      "${pkgdir}/usr/lib/emu-ex-plus/msx"
+    install -m 644 MSX.emu/res/c-bios/* \
+      "${pkgdir}/usr/lib/emu-ex-plus/msx"
+    install -m 755 "${srcdir}/msxemu.sh" \
+      "${pkgdir}/usr/bin/msxemu"
+  fi
+}
+
+# vim:set ts=2 sw=2 et:
