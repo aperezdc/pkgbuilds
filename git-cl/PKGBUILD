@@ -1,14 +1,15 @@
 # Maintainer: Adrian Perez de Castro <adrian@perezdecastro.org>
 pkgname=git-cl-git
 pkgver=20130919
-pkgrel=1
+pkgrel=2
 pkgdesc="A git-command for integrating reviews on Rietveld"
 arch=(any)
 url="https://github.com/martine/git-cl"
 license=('GPL')
 depends=(git python2)
 makedepends=('git')
-md5sums=(skip) #generate with 'makepkg -g'
+conflicts=(depot_tools-svn)
+md5sums=(skip)
 
 _gitroot='git://github.com/martine/git-cl.git'
 _gitname=git-cl
