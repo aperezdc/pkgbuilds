@@ -1,0 +1,25 @@
+# Maintainer: Adrian Perez de Castro <aperez@igalia.com>
+pkgname='include-what-you-use-svn'
+pkgver='3.3'
+pkgrel='1'
+pkgdesc='Tool to remove superfluous #includes in C/C++/Objective-C code'
+url='http://code.google.com/p/include-what-you-use/'
+license='LLVM'
+arch=('i686' 'x86_64')
+
+depends=('llvm' 'clang')
+makedepends=('cmake')
+
+source=("${pkgname}::svn+http://include-what-you-use.googlecode.com/svn/trunk/")
+md5sums=('SKIP')
+
+build () {
+	cd "${srcdir}/${pkgname}"
+	cmake -DCMAKE_INSTALL_PREFIX=/usr -DLLVM_PATH=/usr .
+	make
+}
+
+package () {
+	cd "${srcdir}/${pkgname}"
+	make install DESTDIR="${pkgdir}"
+}
