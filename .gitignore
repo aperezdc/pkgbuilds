@@ -1,3 +1,4 @@
+*.sw[op]
 *.pkg.tar.*
 *.src.tar.*
 pkg/
