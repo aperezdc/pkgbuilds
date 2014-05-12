@@ -8,6 +8,8 @@ url='http://http://miniupnp.tuxfamily.org/'
 license=('BSD')
 conflicts=('miniupnpd' 'minissdpd' 'miniupnpc')
 provides=('miniupnpd' 'minissdpd' 'miniupnpc')
+backup=('etc/conf.d/minissdpd'
+	'etc/miniupnpd/miniupnpd.conf')
 source=("${pkgname}::git+https://github.com/miniupnp/miniupnp.git"
 	miniupnpd-1.8.20140401-foreground.patch
 	miniupnpd.service
@@ -71,7 +73,7 @@ package () {
 		"${srcdir}/miniupnpd.service"
 
 	# Cleanups
-	rm -rf "${pkdir}/etc/init.d"
+	rm -rf "${pkgdir}/etc/init.d"
 }
 
 sha1sums=('SKIP'
