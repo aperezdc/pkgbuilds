@@ -1,0 +1,35 @@
+# Maintainer: Adrian Perez de Castro <aperez@igalia.com>
+
+pkgname='bower-mail-git'
+pkgver=0.6.r0.gc3f9fc7
+pkgrel=1
+pkgdesc="Bower - front-end for notmuch mail"
+arch=('i686' 'x86_64')
+url='https://github.com/wangp/bower'
+license=('GPL')
+depends=('notmuch' 'ncurses' 'coreutils' 'file')
+makedepends=('git' 'mercury-compiler')
+provides=('bower')
+source=("${pkgname}::git+${url}")
+sha512sums=('SKIP')
+
+pkgver () {
+	cd "${pkgname}"
+  git describe --long | sed -r 's/([^-]*-g)/r\1/;s/-/./g'
+}
+
+build() {
+	cd "${pkgname}"
+	make
+}
+
+package() {
+	cd "${pkgname}"
+	install -Dm755 bower "${pkgdir}/bin/bower-mail"
+
+	local file
+	for file in README.md bower.conf.sample ; do
+		install -Dm644 "${file}" "${pkgdir}/usr/share/doc/${pkgname}/${file}"
+	done
+} 
+
