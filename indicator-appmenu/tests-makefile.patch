@@ -1,0 +1,26 @@
+--- tests/Makefile.am.orig	2014-09-22 11:23:36.532751447 +0300
++++ tests/Makefile.am	2014-09-22 11:24:02.409831147 +0300
+@@ -58,12 +58,12 @@
+ check_PROGRAMS += \
+ 	test-result-highlighting
+ 
+-DISTANCE_XML_REPORT = test-result-highlighting.xml
++HILITE_XML_REPORT = test-result-highlighting.xml
+ 
+ test-result-highlighting-test: test-result-highlighting Makefile.am
+ 	@echo "#!/bin/bash" > $@
+ 	@echo $(XVFB_RUN) >> $@
+-	@echo gtester --verbose -k -o $(DISTANCE_XML_REPORT) $(builddir)/test-result-highlighting >> $@
++	@echo gtester --verbose -k -o $(HILITE_XML_REPORT) $(builddir)/test-result-highlighting >> $@
+ 	@chmod +x $@
+ 
+ test_result_highlighting_SOURCES = \
+@@ -80,7 +80,7 @@
+ 	../src/libhud-service.a		\
+ 	$(HUD_LIBS)
+ 
+-DISTCLEANFILES += $(DISTANCE_XML_REPORT)
++DISTCLEANFILES += $(HILITE_XML_REPORT)
+ 
+ ######################
+ # Test Usage DB Simple

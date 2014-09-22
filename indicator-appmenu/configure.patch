@@ -1,0 +1,11 @@
+--- configure.ac.orig	2014-09-22 11:37:38.411223915 +0300
++++ configure.ac	2014-09-22 11:38:21.775112371 +0300
+@@ -83,6 +83,8 @@
+ PKG_CHECK_MODULES([HUD],[
+ 		dbusmenu-glib-0.4 >= $DBUSMENU_GLIB_REQUIRED_VERSION
+ 		libbamf3 
++		gtk+-3.0 >= $GTK_REQUIRED_VERSION
++		gio-unix-2.0
+ 		sqlite3 >= $SQLITE_REQUIRED_VERSION
+ ])
+ 
