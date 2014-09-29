@@ -5,7 +5,7 @@
 pkgbase=lgi
 pkgname=lua51-lgi
 pkgver=0.8.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Lua bindings for gnome/gobject using gobject-introspection library'
 arch=(i686 x86_64)
 url='https://github.com/pavouk/lgi'
@@ -16,9 +16,14 @@ conflicts=('lgi')
 source=("$pkgbase-$pkgver.tar.gz::https://github.com/pavouk/$pkgbase/archive/$pkgver.tar.gz")
 md5sums=('f0a161fc07b65afabdd09aa5455390a3')
 
+prepare () {
+  cd $pkgbase-$pkgver
+  sed -i -e 's/-llua/-llua5.1/' lgi/Makefile
+}
+
 build() {
   cd $pkgbase-$pkgver
-  make LUA_VERSION=5.1
+  make LUA_VERSION=5.1 LUA_CFLAGS="$(pkg-config lua5.1 --cflags)"
 }
 
 package_lua51-lgi() {
