@@ -1,0 +1,30 @@
+# Contributor: Pierre Chapuis <catwell at archlinux dot us>
+# Contributor: Stefan Husmann <stefan-husmann@t-online.de>
+# Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
+
+pkgname='lua51-stdlib'
+_pkgname=${pkgname/51/}
+pkgver='40'
+pkgrel='2'
+pkgdesc='Standard library for Lua'
+arch='any'
+url="http://github.com/${_pkgname}/${_pkgname}"
+license=('MIT')
+depends=('lua51')
+source=("http://github.com/${_pkgname}/${_pkgname}/archive/release-v${pkgver}.zip")
+md5sums=('5777db378874d1582630f20ea2f95d20')
+
+build() {
+  cd "${_pkgname}-release-v${pkgver}"
+  LUA=lua5.1 ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "${_pkgname}-release-v${pkgver}"
+  make DESTDIR="${pkgdir}" install
+  install -Dm644 COPYING \
+	  "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+	mv "${pkgdir}"/usr/share/doc/{stdlib,${pkgname}}
+}
+
