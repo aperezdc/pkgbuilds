@@ -1,7 +1,7 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgname='mosh-cleaner-git'
 pkgdesc='Cleans up stale Mosh shell sessions'
-pkgver=r128
+pkgver=r149.b0df6d8
 pkgrel=1
 arch=('x86_64' 'i686' 'arm')
 url='http://git.zx2c4.com/mosh-cleaner/about/'
@@ -13,7 +13,10 @@ sha512sums=('SKIP')
 
 pkgver () {
 	cd "${_pgname}"
-	printf "r%s" "$(git rev-list --count HEAD)"
+	( set -o pipefail
+	  git describe --long --tags 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+	  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+	)
 }
 
 build () {
