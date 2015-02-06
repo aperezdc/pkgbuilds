@@ -1,7 +1,7 @@
 # Maintainer: Adrian Perez de Castro <aperez@igalia.com>
 
 pkgname='bower-mail-git'
-pkgver=0.6.r0.gc3f9fc7
+pkgver=0.6.r17.g1e41938
 pkgrel=1
 pkgdesc="Bower - front-end for notmuch mail"
 arch=('i686' 'x86_64')
