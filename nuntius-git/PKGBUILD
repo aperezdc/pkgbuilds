@@ -1,6 +1,7 @@
 # Maintainer: Adrián Pérez de Castro <aperez@igalia.com>
 pkgname='nuntius-git'
 pkgdesc='Delivers notifications from your phone or tablet to your computer'
+url='https://github.com/holylobster/nuntius-linux'
 license='GPL'
 pkgver=r2.27ac01b
 pkgrel=1
