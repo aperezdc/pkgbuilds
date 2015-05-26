@@ -2,7 +2,7 @@
 pkgname='ttf-monoid-git'
 pkgdesc='Open Source coding font'
 pkgver=r159.cec7b01
-pkgrel=1
+pkgrel=2
 arch=('any')
 license=('custom:MIT')
 url='http://andreaslarsen.github.io/monoid/'
