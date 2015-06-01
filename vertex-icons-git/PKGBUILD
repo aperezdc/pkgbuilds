@@ -3,6 +3,7 @@ pkgname='vertex-icons-git'
 pkgdesc=''
 pkgver=r16.f27e47e
 pkgrel=1
+url='https://github.com/horst3180/Vertex-Icons/'
 depends=('moka-icon-theme-git')
 arch=('any')
 license='GPL'
