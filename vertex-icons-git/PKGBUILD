@@ -31,4 +31,6 @@ package () {
 			cp -r "${i}" "${pkgdir}/usr/share/icons/Vertex-Icons"
 		fi
 	done
+	install -Dm644 index.theme \
+		"${pkgdir}/usr/share/icons/Vertex-Icons/index.theme"
 }
